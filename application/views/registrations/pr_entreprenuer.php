@@ -5,21 +5,36 @@ if (isset($this->session->userdata('auth')['SIID'])) {
 <html lang="en">
 
 <head>
-    <title>Mentor</title>
+    <title>Entreprenuer</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="<?php echo base_url("images/rotating-planet.png")?>">
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> -->
+
+    <!-- <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css"> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="<?php echo base_url("css/pr/style-profile.css")?>">
     <link rel="stylesheet" href="<?php echo base_url("css/pr/style-form.css")?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo base_url("images/rotating-planet.png")?>">
 </head>
 
 <body>
     <div class="planet-cont">
-        <img src="<?php echo base_url("images/rotating-planet.png")?>" alt="" class="planet corner">
+        <img src="rotating-planet.png" alt="" class="planet corner">
     </div>
 
     <nav class="navbar">
@@ -49,7 +64,7 @@ if (isset($this->session->userdata('auth')['SIID'])) {
     </nav>
 
     <div class="bg-glass container">
- <form method="post" action="<?php echo base_url("index.php/regcontroller/mentor") ?> " onSubmit="return validateForm(event)">
+    <form method="post" action="<?php echo base_url("index.php/regcontroller/entreprenuer") ?> " onSubmit="return validateForm(event)">
         <div class="wrapper">
             <div class="header">
                 <ul>
@@ -69,141 +84,175 @@ if (isset($this->session->userdata('auth')['SIID'])) {
                         </div>
                     </li>
                 </ul>
-            </div> 
-            
+            </div>
             <div class="form_wrap">
                 <div class="form_1 data_info">
                     <h2>Personal Info</h2>
-                  
-                        <div class="form_container">
-                            <div class="input_wrap">
-                                <!-- <label for="name">Name</label> -->
-                                <input type="text" name="name" class="input" id="name" placeholder="Name" value="<?php echo isset($user_data['NAME']) ? $user_data['NAME'] : ''; ?>" required>
-                            </div>
-                            <div class="input_wrap">
-                                <!-- <label for="age">Age (in Years)</label> -->
-                                <input type="number" min="30" name="age" class="input" id="age" value="<?php echo isset($user_data['AGE']) ? $user_data['AGE'] : ''; ?>"
-                                    placeholder="Age in Years" required>
-                            </div>
-                            <div class="input_wrap">
-                                <!-- <label for="industry or field of interest">Industry or Field of Interest</label> -->
-                                <select name="interest[]" class="input" 
-                                    id="interest" placeholder="Industry or Field of Interest"
-                                    required>
-                                    <?php
-                                    if(isset($user_data['INTEREST']))
-                                    {
-        $options = array("Technology", "Health care", "Education", "Finance", "E-commerce", "Marketing", "Hospitality", "Entertainment", "Non-profit", "Social media", "Retail", "Manufacturing", "Agriculture", "Transportation", "Construction", "Real estate", "Energy", "Fashion", "Design", "Consulting");
-        foreach($options as $option) {
-            echo "<option value='$option'";
-            if($option == $user_data['INTEREST']) {
-                echo " selected";
-            }
-            echo ">$option</option>";
-        }
-    }
-    else
-    {
-        echo('<option value="" selected="true" disabled="true" hidden="true">Choose here</option>
-        <option value="Technology">Technology</option>
-        <option value="Health care">Health care</option>
-        <option value="Education">Education</option>
-        <option value="Finance">Finance</option>
-        <option value="E-commerce">E-commerce</option>
-        <option value="Marketing">Marketing</option>
-        <option value="Hospitality">Hospitality</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Non-profit">Non-profit
-        </option>
-        <option value="Social media">Social media</option>
-        <option value="Retail">Retail</option>
-        <option value="Manufacturing">Manufacturing</option>
-        <option value="Agriculture">Agriculture</option>
-        <option value="Transportation">Transportation</option>
-        <option value="Construction">Construction</option>
-        <option value="Real estate">Real estate</option>
-        <option value="Energy">Energy</option>
-        <option value="Fashion">Fashion</option>
-        <option value="Design">Design</option>
-        <option value="Consulting">Consulting</option>');
-    }
-    ?>
-                                    
-                                </select>
-                            </div>
-                        </div>
-                  
-                </div>
-                <div class="form_2 data_info" style="display: none;">
-                    <h2>Professional Info</h2>
                     
                         <div class="form_container">
                             <div class="input_wrap">
+                                <!-- <label for="name">Name</label> -->
+                                <input type="text" name="name" class="input" id="name" placeholder="Name" required>
+                            </div>
+                            <div class="input_wrap">
+                                <!-- <label for="age">Age (in Years)</label> -->
+                                <input type="number" min="0" name="age" class="input" id="age"
+                                    placeholder="Age in Years" required>
+                            </div>
+                            <div class="input_wrap">
+                                <label for="Location">Where do you live ?</label>
+
+                                <select placeholder="Choose location" name="location"  class="input"
+                                    id="interest" required>
+                                    <option value="SelectState">Select State</option>
+                        <option value="Andra Pradesh">Andra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madya Pradesh">Madya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Orissa">Orissa</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttaranchal">Uttaranchal</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <option disabled="" style="background-color:#aaa; color:#fff">UNION Territories</option>
+                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                        <option value="Daman and Diu">Daman and Diu</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Lakshadeep">Lakshadeep</option>
+                        <option value="Pondicherry">Pondicherry</option>
+                                </select>
+
+
+                            </div>
+                        </div>
+                    
+                    <!-- <script
+                        src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+                    <script>
+                        new MultiSelectTag('interest', {
+                            rounded: true,    // default true
+                            shadow: false      // default false
+                        })
+                    </script> -->
+                </div>
+                <div class="form_2 data_info" style="display: none;">
+                    <h2>Business Info</h2>
+                   
+                        <div class="form_container">
+                            <div class="input_wrap">
                                 <!-- <label for="area of expertise">Area of Expertise</label> -->
-                                <input type="text" name="expertise" class="input" id="expertise" value="<?php echo isset($user_data['EXPERTISE']) ? $user_data['EXPERTISE'] : ''; ?>"
-                                    placeholder="Area of Expertise" required>
+                                <input type="text" class="input" placeholder="Business or Startup name" name="startup" required>
                             </div>
                             <div class="input_wrap">
                                 <!-- <label for="years of experience">Years of Experience</label> -->
-                                <input type="number" min="0" max="30" name="experience" class="input" value="<?php echo isset($user_data['EXPRIENCE']) ? $user_data['EXPRIENCE'] : ''; ?>"
-                                    id="experience" placeholder="Years of Experience" required>
+                                <select placeholder="Choose Idea stage" name="stage"  class="input"
+                                    id="stage" required>
+                                    <option value="Idea stage">Idea stage</option>
+<option value="Research and Development stage">Research and Development stage</option>
+<option value="Prototype stage">Prototype stage</option>
+<option value="Testing and Validation stage">Testing and Validation stage</option>
+<option value="Pre-launch stage">Pre-launch stage</option>
+<option value="Post-launch stage">Post-launch stage</option>
+<option value="Growth stage">Growth stage</option>
+<option value="Scaling stage">Scaling stage</option>
+<option value="Established stage">Established stage</option>
+                                </select>
                             </div>
                             <div class="input_wrap">
                                 <!-- <label for="current job title and company">Current Job Title and Company</label> -->
-                                <input type="text" name="company" class="input" value="<?php echo isset($user_data['COMPANY']) ? $user_data['COMPANY'] : ''; ?>"
-                                    id="company" placeholder="Current Job Title and Company"
-                                    required>
+                                <select placeholder="Choose your area of need" name="need"  class="input"
+                                    id="interest" required>
+                                    <option value="Product Development">Product Development</option>
+<option value="Marketing and Branding">Marketing and Branding</option>
+<option value="Sales and Business Development">Sales and Business Development</option>
+<option value="Customer Acquisition">Customer Acquisition</option>
+<option value="Market Research">Market Research</option>
+<option value="Financial Planning and Budgeting">Financial Planning and Budgeting</option>
+<option value="Fundraising and Investment">Fundraising and Investment</option>
+<option value="Team Building and Recruitment">Team Building and Recruitment</option>
+<option value="Legal and Regulatory Compliance">Legal and Regulatory Compliance</option>
+<option value="Operations and Logistics">Operations and Logistics</option>
+<option value="Technology and IT Support">Technology and IT Support</option>
+<option value="Supply Chain Management">Supply Chain Management</option>
+<option value="Manufacturing and Production">Manufacturing and Production</option>
+<option value="Inventory Management">Inventory Management</option>
+<option value="Distribution and Fulfillment">Distribution and Fulfillment</option>
+<option value="Human Resources and Training">Human Resources and Training</option>
+<option value="Quality Control and Assurance">Quality Control and Assurance</option>
+<option value="Intellectual Property Protection">Intellectual Property Protection</option>
+<option value="Crisis Management and Risk Assessment">Crisis Management and Risk Assessment</option>
+<option value="International Expansion">International Expansion</option>
+</select>
                             </div>
                         </div>
                     
                 </div>
                 <div class="form_3 data_info" style="display: none;">
-                    <h2>Professional Info</h2>
+                    <h2>Business Info</h2>
                     
                         <div class="form_container">
 
                             <div class="input_wrap">
                                 <!-- <label for="availability">Availability (e.g: hours/week,preferred times of day)</label> -->
-                                <input type="text" name="availability" class="input" id="availability"
-                                    placeholder="Availability (e.g: preferred times of day)" value="<?php echo isset($user_data['AVAIL']) ? $user_data['AVAIL'] : ''; ?>"required>
-                            </div>
-                            <div class="input_wrap">
-                                <!-- <label for="future availability">Future availability for Mentorship (Yes or No)</label> -->
-                                <select type="text" name="favailability" class="input" id="favailability" 
-                                    placeholder="Future availability for Mentorship?" required>
-                                    <?php
-                                    if(isset($user_data['FAVAIL']))
-                                    {
-        $options = array("Yes", "No");
-        foreach($options as $option) {
-            echo "<option value='$option'";
-            if($option == $user_data['FAVAIL']) {
-                echo " selected";
-            }
-            echo ">$option</option>";
-        }
-    }
-    else
-    {
-        echo(' <option value="" selected disabled hidden>Yes / No</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>');
-    }
-    ?>
-                                    <!-- <option value="Yes">Yes</option>
-                                    <option value="No">No</option> -->
-                                </select>
+                                <input type="text" class="input" name="desc" placeholder="Business description" required>
                             </div>
                             <div class="input_wrap">
                                 <!-- <label for="LinkedIn">LinkedIn Profile URL or Website</label> -->
-                                <input type="url" name="currenturl" class="input" id="currenturl" placeholder="LinkedIn Profile or Website URL" value="<?php echo isset($user_data['URL']) ? $user_data['URL'] : ''; ?>" required>
+                                <input type="url" name="url" id="url" class="input" placeholder="LinkedIn Profile / Website URL" required>
                             </div>
-                            <!-- <div class="input_wrap">
-                                <label for="formFile" class="form-label" style="text-align: center;">Professional Certifications or Training</label>
-                                <input class="input form-control" type="file" id="formFile">
-                            </div> -->
+                            <div class="input_wrap">
+                                <label for="formFile" class="form-label" style="text-align: center;">Industry or Niche Market
+</label>
+                               <select placeholder="Industry" name="industry[]"  class="input"
+                                    id="interest" required>
+                                    <option value="" selected="true" disabled="true" hidden="true">Choose here</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Health care">Health care</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="E-commerce">E-commerce</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Hospitality">Hospitality</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Non-profit">Non-profit
+                                    </option>
+                                    <option value="Social media">Social media</option>
+                                    <option value="Retail">Retail</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Agriculture">Agriculture</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Construction">Construction</option>
+                                    <option value="Real estate">Real estate</option>
+                                    <option value="Energy">Energy</option>
+                                    <option value="Fashion">Fashion</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Consulting">Consulting</option>
+                                </select>
+                            </div>
                         </div>
-                    
+                   
                 </div>
             </div>
             <div class="btns_wrap">
@@ -244,7 +293,7 @@ if (isset($this->session->userdata('auth')['SIID'])) {
                 </div>
             </div>
         </div>
-  </form>
+</form>
         <!-- <div class="modal_wrapper">
             <div class="shadow"></div>
             <div class="success_wrap">
@@ -368,11 +417,11 @@ if (isset($this->session->userdata('auth')['SIID'])) {
         <!-- </div> -->
         <!-- </div> -->
     </div>
-</body>
+
 <script>
     function validateForm(event) {
   
-  const currenturl = document.getElementById("currenturl").value;
+  const currenturl = document.getElementById("url").value;
 
   const linkedinUrlPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|company)\/[a-zA-Z0-9-]+(\/(.*))?$/i;
 

@@ -18,6 +18,25 @@ class Regcontroller extends CI_Controller
 	{
 
     }
+    public function reg_entreprenuer()
+    {
+        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID']));
+        $r_result = $r_query->result();
+        
+        if (count($r_result) > 0) {
+        $this->db->where('MID', $this->session->userdata('auth')['CID']);
+        $query = $this->db->get('entreprenuer');
+        $user_data = $query->row_array();
+        $this->load->view('registrations/pr_entreprenuer', array('user_data' => $user_data));
+
+        
+        }
+        else
+        {
+            $this->load->view('registrations/pr_entreprenuer');
+        }
+        
+    }
     public function reg_mentor()
 	{
         $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID']));
@@ -35,6 +54,11 @@ class Regcontroller extends CI_Controller
         {
             $this->load->view('registrations/pr_mentor');
         }
+    }
+    public function entreprenuer()
+    {
+        $form=$this->input->post();
+        print_r ($form);
     }
     public function mentor()
 	{
