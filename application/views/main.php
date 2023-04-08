@@ -1,3 +1,6 @@
+<?php
+if (isset($this->session->userdata('auth')['SIID'])) {
+    ?>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script defer src="<?php echo base_url("js/script.js")?>"></script>
@@ -158,7 +161,7 @@ $this->load->library('session');
       </li>
 
       <li class="nav-item" id="logout">
-        <a href="#" class="nav-link">
+        <a href="<?php echo base_url("index.php/MainController/videocall?id=".uniqid()) ?>" class="nav-link">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
             <path d="M0 0h24v24H0V0z" fill="none" />
             <path
@@ -1151,3 +1154,9 @@ function cdis(i)
 }
     </script>
 </body>
+<?php
+}
+else {
+    echo ("error occured");
+}
+?>

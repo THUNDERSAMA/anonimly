@@ -57,6 +57,7 @@ $route['translate_uri_dashes'] = FALSE;
 //$route['login']='Logincontroller/login';
 $route['logins']='Logincontroller/logins';
 $route['logout']='Logincontroller/logout';
+$route['prm']='Regcontroller/logoutreg_mentor';
 $route['postupl']='MainController/postupl';
 $route['example'] = 'welcome/pl';
 $route['sign']='Signcontroller/sign';

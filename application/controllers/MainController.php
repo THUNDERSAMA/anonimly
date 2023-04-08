@@ -294,4 +294,9 @@ if (count($like_result) > 0) {
   );
   echo json_encode($response);
 }
+public function videocall()
+{
+  $id = $_GET['id'];
+  $this->load->view('vc/videocall',array('user_data' => $id));
+}
 }
