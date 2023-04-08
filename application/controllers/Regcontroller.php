@@ -20,7 +20,7 @@ class Regcontroller extends CI_Controller
     }
     public function reg_entreprenuer()
     {
-        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID']));
+        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID'],"STATUS" => '0'));
         $r_result = $r_query->result();
         
         if (count($r_result) > 0) {
@@ -39,7 +39,7 @@ class Regcontroller extends CI_Controller
     }
     public function reg_mentor()
 	{
-        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID']));
+        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID'],"STATUS" => '0'));
         $r_result = $r_query->result();
         
         if (count($r_result) > 0) {
@@ -57,12 +57,49 @@ class Regcontroller extends CI_Controller
     }
     public function entreprenuer()
     {
-        $form=$this->input->post();
-        print_r ($form);
+        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID'],"STATUS" => '0'));
+        $r_result = $r_query->result();
+        
+        if (count($r_result) > 0) {
+            $data = array(
+                'MID' => $this->session->userdata('auth')['CID'],
+                'NAME' => $this->input->post('name'),
+                'AGE' => $this->input->post('age'),
+                'INDUSTRY' => implode (", ",$this->input->post('industry')),
+                'LOCATION' => $this->input->post('location'),
+                'STARTUP' => $this->input->post('startup'),
+                'STAGE' => $this->input->post('stage'),
+                'NEED' => $this->input->post('need'),
+                'DESCRIBES' => $this->input->post('desc'),
+                'URL' => $this->input->post('url')
+            );
+            $this->db->update('entreprenuer', $data);
+        
+        } else {
+                $data = array(
+                    'MID' => $this->session->userdata('auth')['CID'],
+                    'NAME' => $this->input->post('name'),
+                    'AGE' => $this->input->post('age'),
+                    'INDUSTRY' => implode (", ",$this->input->post('industry')),
+                    'LOCATION' => $this->input->post('location'),
+                    'STARTUP' => $this->input->post('startup'),
+                    'STAGE' => $this->input->post('stage'),
+                    'NEED' => $this->input->post('need'),
+                    'DESCRIBES' => $this->input->post('desc'),
+                    'URL' => $this->input->post('url')
+                );
+                $this->db->insert('entreprenuer', $data);
+                $data1 = array(
+                    'MID' => $this->session->userdata('auth')['CID'],
+                    'TYPE' => "2"
+                );
+                $this->db->insert('registrations', $data1);
+            }
+            $this->load->view('main');
     }
     public function mentor()
 	{
-        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID']));
+        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID'] ,"STATUS" => '0'));
 $r_result = $r_query->result();
 
 if (count($r_result) > 0) {
@@ -101,5 +138,26 @@ if (count($r_result) > 0) {
         $this->db->insert('registrations', $data1);
     }
     $this->load->view('main');
+}
+public function getbest() {
+    $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID'] ,'STATUS' => '0','TYPE'=>'2'));
+$r_result = $r_query->result();
+
+if (count($r_result) > 0) {
+    $user_query = $this->db->get_where('entreprenuer', array('MID' => $this->session->userdata('auth')['CID']));
+                $usere = $user_query->row_array();
+                $xc=$usere['INDUSTRY'];
+    $this->load->database();
+    //SELECT * FROM mentors WHERE INTEREST LIKE '%$xc%' AND status = '0'
+    $sql = "SELECT *
+    FROM maskers
+    INNER JOIN  mentors ON mentors.MID = maskers.MASKING_ID
+    WHERE LOWER(mentors.INTEREST) LIKE '%".strtolower($xc)."%' AND mentors.STATUS = '0'";
+    $query = $this->db->query($sql);
+    $datas = $query->result();
+    // $datas['users'] = $result;
+    file_put_contents("testcmt.txt",$xc.json_encode($datas));
+    $this->load->view('search', array('datas' => $datas));
+}
 }
 }

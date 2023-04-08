@@ -92,19 +92,38 @@ if (isset($this->session->userdata('auth')['SIID'])) {
                         <div class="form_container">
                             <div class="input_wrap">
                                 <!-- <label for="name">Name</label> -->
-                                <input type="text" name="name" class="input" id="name" placeholder="Name" required>
+                                <input type="text" name="name" class="input" id="name" placeholder="Name" value="<?php echo isset($user_data['NAME']) ? $user_data['NAME'] : ''; ?>" required>
                             </div>
                             <div class="input_wrap">
                                 <!-- <label for="age">Age (in Years)</label> -->
                                 <input type="number" min="0" name="age" class="input" id="age"
-                                    placeholder="Age in Years" required>
+                                value="<?php echo isset($user_data['AGE']) ? $user_data['AGE'] : ''; ?>" placeholder="Age in Years" required>
                             </div>
                             <div class="input_wrap">
                                 <label for="Location">Where do you live ?</label>
 
                                 <select placeholder="Choose location" name="location"  class="input"
                                     id="interest" required>
-                                    <option value="SelectState">Select State</option>
+                                    <?php
+                                    if(isset($user_data['LOCATION']))
+                                    {
+        $options = array("Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh"
+        , "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand"
+        , "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram"
+        , "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura"
+        , "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh"
+        , "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Puducherry");
+        foreach($options as $option) {
+            echo "<option value='$option'";
+            if($option == $user_data['LOCATION']) {
+                echo " selected";
+            }
+            echo ">$option</option>";
+        }
+    }
+    else
+    {
+        echo('<option value="SelectState">Select State</option>
                         <option value="Andra Pradesh">Andra Pradesh</option>
                         <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                         <option value="Assam">Assam</option>
@@ -141,7 +160,9 @@ if (isset($this->session->userdata('auth')['SIID'])) {
                         <option value="Daman and Diu">Daman and Diu</option>
                         <option value="Delhi">Delhi</option>
                         <option value="Lakshadeep">Lakshadeep</option>
-                        <option value="Pondicherry">Pondicherry</option>
+                        <option value="Pondicherry">Pondicherry</option>');
+                    }
+                    ?>
                                 </select>
 
 
@@ -163,13 +184,27 @@ if (isset($this->session->userdata('auth')['SIID'])) {
                         <div class="form_container">
                             <div class="input_wrap">
                                 <!-- <label for="area of expertise">Area of Expertise</label> -->
-                                <input type="text" class="input" placeholder="Business or Startup name" name="startup" required>
+                                <input type="text" class="input" placeholder="Business or Startup name" name="startup" value="<?php echo isset($user_data['STARTUP']) ? $user_data['STARTUP'] : ''; ?>" required>
                             </div>
                             <div class="input_wrap">
                                 <!-- <label for="years of experience">Years of Experience</label> -->
                                 <select placeholder="Choose Idea stage" name="stage"  class="input"
                                     id="stage" required>
-                                    <option value="Idea stage">Idea stage</option>
+                                    <?php
+                                    if(isset($user_data['STAGE']))
+                                    {
+        $options = array("Idea stage","Research and Development stage","Prototype stage","Testing and Validation stage","Pre-launch stage","Post-launch stage","Growth stage","Scaling stage","Established stage");
+        foreach($options as $option) {
+            echo "<option value='$option'";
+            if($option == $user_data['STAGE']) {
+                echo " selected";
+            }
+            echo ">$option</option>";
+        }
+    }
+    else
+    {
+        echo('<option value="Idea stage">Idea stage</option>
 <option value="Research and Development stage">Research and Development stage</option>
 <option value="Prototype stage">Prototype stage</option>
 <option value="Testing and Validation stage">Testing and Validation stage</option>
@@ -178,13 +213,29 @@ if (isset($this->session->userdata('auth')['SIID'])) {
 <option value="Growth stage">Growth stage</option>
 <option value="Scaling stage">Scaling stage</option>
 <option value="Established stage">Established stage</option>
+    ');}?>
                                 </select>
                             </div>
                             <div class="input_wrap">
                                 <!-- <label for="current job title and company">Current Job Title and Company</label> -->
                                 <select placeholder="Choose your area of need" name="need"  class="input"
                                     id="interest" required>
-                                    <option value="Product Development">Product Development</option>
+                                    
+                                    <?php
+                                    if(isset($user_data['NEED']))
+                                    {
+        $options = array("Product Development","Marketing and Branding","Sales and Business Development","Customer Acquisition","Market Research","Financial Planning and Budgeting","Fundraising and Investment","Team Building and Recruitment","Legal and Regulatory Compliance","Operations and Logistics","Technology and IT Support","Supply Chain Management","Manufacturing and Production","Inventory Management","Distribution and Fulfillment","Human Resources and Training","Quality Control and Assurance","Intellectual Property Protection","Crisis Management and Risk Assessment","International Expansion");
+        foreach($options as $option) {
+            echo "<option value='$option'";
+            if($option == $user_data['NEED']) {
+                echo " selected";
+            }
+            echo ">$option</option>";
+        }
+    }
+    else
+    {
+        echo('<option value="Product Development">Product Development</option>
 <option value="Marketing and Branding">Marketing and Branding</option>
 <option value="Sales and Business Development">Sales and Business Development</option>
 <option value="Customer Acquisition">Customer Acquisition</option>
@@ -203,7 +254,8 @@ if (isset($this->session->userdata('auth')['SIID'])) {
 <option value="Quality Control and Assurance">Quality Control and Assurance</option>
 <option value="Intellectual Property Protection">Intellectual Property Protection</option>
 <option value="Crisis Management and Risk Assessment">Crisis Management and Risk Assessment</option>
-<option value="International Expansion">International Expansion</option>
+<option value="International Expansion">International Expansion</option>');}
+?>
 </select>
                             </div>
                         </div>
@@ -216,39 +268,55 @@ if (isset($this->session->userdata('auth')['SIID'])) {
 
                             <div class="input_wrap">
                                 <!-- <label for="availability">Availability (e.g: hours/week,preferred times of day)</label> -->
-                                <input type="text" class="input" name="desc" placeholder="Business description" required>
+                                <input type="text" class="input" name="desc" value="<?php echo isset($user_data['DESCRIBES']) ? $user_data['DESCRIBES'] : ''; ?>"placeholder="Business description" required>
                             </div>
                             <div class="input_wrap">
                                 <!-- <label for="LinkedIn">LinkedIn Profile URL or Website</label> -->
-                                <input type="url" name="url" id="url" class="input" placeholder="LinkedIn Profile / Website URL" required>
+                                <input type="url" name="url" id="url" class="input" placeholder="LinkedIn Profile / Website URL" value="<?php echo isset($user_data['URL']) ? $user_data['URL'] : ''; ?>" required>
                             </div>
                             <div class="input_wrap">
                                 <label for="formFile" class="form-label" style="text-align: center;">Industry or Niche Market
 </label>
                                <select placeholder="Industry" name="industry[]"  class="input"
                                     id="interest" required>
-                                    <option value="" selected="true" disabled="true" hidden="true">Choose here</option>
-                                    <option value="Technology">Technology</option>
-                                    <option value="Health care">Health care</option>
-                                    <option value="Education">Education</option>
-                                    <option value="Finance">Finance</option>
-                                    <option value="E-commerce">E-commerce</option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="Hospitality">Hospitality</option>
-                                    <option value="Entertainment">Entertainment</option>
-                                    <option value="Non-profit">Non-profit
-                                    </option>
-                                    <option value="Social media">Social media</option>
-                                    <option value="Retail">Retail</option>
-                                    <option value="Manufacturing">Manufacturing</option>
-                                    <option value="Agriculture">Agriculture</option>
-                                    <option value="Transportation">Transportation</option>
-                                    <option value="Construction">Construction</option>
-                                    <option value="Real estate">Real estate</option>
-                                    <option value="Energy">Energy</option>
-                                    <option value="Fashion">Fashion</option>
-                                    <option value="Design">Design</option>
-                                    <option value="Consulting">Consulting</option>
+                                    <?php
+                                    if(isset($user_data['INDUSTRY']))
+                                    {
+        $options = array("Technology", "Health care", "Education", "Finance", "E-commerce", "Marketing", "Hospitality", "Entertainment", "Non-profit", "Social media", "Retail", "Manufacturing", "Agriculture", "Transportation", "Construction", "Real estate", "Energy", "Fashion", "Design", "Consulting");
+        foreach($options as $option) {
+            echo "<option value='$option'";
+            if($option == $user_data['INDUSTRY']) {
+                echo " selected";
+            }
+            echo ">$option</option>";
+        }
+    }
+    else
+    {
+        echo('<option value="" selected="true" disabled="true" hidden="true">Choose here</option>
+        <option value="Technology">Technology</option>
+        <option value="Health care">Health care</option>
+        <option value="Education">Education</option>
+        <option value="Finance">Finance</option>
+        <option value="E-commerce">E-commerce</option>
+        <option value="Marketing">Marketing</option>
+        <option value="Hospitality">Hospitality</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Non-profit">Non-profit
+        </option>
+        <option value="Social media">Social media</option>
+        <option value="Retail">Retail</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Agriculture">Agriculture</option>
+        <option value="Transportation">Transportation</option>
+        <option value="Construction">Construction</option>
+        <option value="Real estate">Real estate</option>
+        <option value="Energy">Energy</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Design">Design</option>
+        <option value="Consulting">Consulting</option>');
+    }
+    ?>
                                 </select>
                             </div>
                         </div>
