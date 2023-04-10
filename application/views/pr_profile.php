@@ -357,12 +357,12 @@ function load_more_posts(source) {
           // if(flag%2==0)
           // {//'<div class="post">' + posts[i].TITLE + '</div>'
             if (posts[i].IMAGE==null) {
-              $('#postslist').append('<article class="postcard dark blue"> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href="http://localhost/anonimly/index.php/ProfileController/profile?id='+posts[i].MASKIND_ID+'"> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="pl'+posts[i].ID+'"> <a href="javascript:plike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_up_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li> <li class="tag__item" id="pd'+posts[i].ID+'"> <a href="javascript:pdlike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_down_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-clock mr-2"></i>Downvote --> </li> <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
+              $('#postslist').append('<article class="postcard dark blue"> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href="http://localhost/anonimly/index.php/ProfileController/profile?id='+posts[i].MASKIND_ID+'"> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="dl'+posts[i].ID+'"> <a href="javascript:pdel('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/delete_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li>  <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
 
             }
             else{
             var imx="http://localhost/anonimly/uploads/";
-          $('#postslist').append('<article class="postcard dark blue"> <a class="postcard__img_link" href="#"> <img class="postcard__img" src="'+imx+posts[i].IMAGE+'" alt="Image Title" /> </a> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href="http://localhost/anonimly/index.php/ProfileController/profile?id='+posts[i].MASKIND_ID+'"> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="pl'+posts[i].ID+'"> <a href="javascript:plike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_up_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li> <li class="tag__item" id="pd'+posts[i].ID+'"> <a href="javascript:pdlike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_down_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-clock mr-2"></i>Downvote --> </li> <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
+          $('#postslist').append('<article class="postcard dark blue"> <a class="postcard__img_link" href="#"> <img class="postcard__img" src="'+imx+posts[i].IMAGE+'" alt="Image Title" /> </a> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href="http://localhost/anonimly/index.php/ProfileController/profile?id='+posts[i].MASKIND_ID+'"> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="dl'+posts[i].ID+'"> <a href="javascript:pdel('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/delete_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li>  <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
          // }
         }
          // flag++;
@@ -531,7 +531,7 @@ function plike(i)
  }
 });
 }
-function pdlike(i)
+function pdel(i)
 {
   
   var cdata={
@@ -542,13 +542,16 @@ function pdlike(i)
                     };
                   //  console.log(cdata);
        $.ajax({
- url: '<?php echo base_url("index.php/MainController/postdislike") ?>',
+ url: '<?php echo base_url("index.php/MainController/postdelete") ?>',
  method: 'POST',
  data: cdata,
  success: function(response) {
    console.log(response);
-   $("#pd"+i).css("background-color", "red");
-   $("#pl"+i).css("background-color", "rgba(83, 83, 83, 0.4)");
+   //$("#pd"+i).css("background-color", "red");
+   $("#dl"+i).css("background-color", "red");
+   setTimeout(() => {
+                        location.reload();
+                    }, 1000);
  },
  error: function(errorThrown) {
    console.log(errorThrown);

@@ -198,11 +198,15 @@ if (isset($this->session->userdata('auth')['SIID'])) {
             <div class="pfp-bio">
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
             </div>
-
-            <button href="#" id="follow" class="follow-btn">
+            <?php
+            $authData = $this->session->userdata('auth');
+                if(isset($authData['CID']))
+                {
+           echo (' <button  id="follow" class="follow-btn">
                 Follow
-            </button>
-
+            </button>');
+                }
+                ?>
             <div class="profile-info">
                 <div class="inf">
                     <h3><?php echo $like_result[0]['POPULARITY']; ?></h3>
@@ -575,6 +579,32 @@ function post_exists(post_id) {
 $( ".close" ).click(function() {
     const commentContainer = document.querySelector('.comment-container');
     commentContainer.style.display = "none";
+});
+$("#follow").click(function() {
+    
+ 
+  var cdata={
+                           
+                           pid:prism,
+                          
+                           
+                    };
+                    //console.log(cdata);
+       $.ajax({
+ url: '<?php echo base_url("index.php/MainController/prfollow") ?>',
+ method: 'POST',
+ data: cdata,
+ success: function(response) {
+   console.log(response);
+  
+  
+   $("#follow").css("background-color", "green");
+   $("#follow").html('Following  &#128147;');
+ },
+ error: function(errorThrown) {
+   console.log(errorThrown);
+ }
+});
 });
 function cmtload(i) {
        // console.log("test");
@@ -958,12 +988,17 @@ else {
                 <h2><?php echo $like_result[0]['SIID']; ?></h2>
             </div>
             <div class="pfp-bio">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                <?php 
+                if($this->session->userdata('tempbio')!=null)
+                {
+                echo($this->session->userdata('tempbio'));
+                }
+                else{
+                echo('<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>');
+                }?>
             </div>
 
-            <button href="#" id="follow" class="follow-btn">
-                Follow
-            </button>
+        
 
             <div class="profile-info">
                 <div class="inf">

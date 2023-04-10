@@ -1,0 +1,77 @@
+.dark-container {
+    background-color: rgb(0 0 0 / 0.3);
+    border-radius: 10px;
+    margin-block-end: 10px;
+    margin-inline: 2rem;
+    padding: 10px 15px;
+    display: flex;
+    z-index: 10;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    text-align: left;
+}
+
+.dark-container span {
+    width: calc(100% - 10rem);
+    display: flex;
+    justify-content: left;
+    color: white;
+    /* font-size: 10px; */
+}
+
+.posted-comment {
+    margin-top: 2rem;
+}
+
+.dark-pfp img {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-inline-end: 20px;
+    opacity: 0.8;
+    transition: all 200ms ease;
+}
+
+.dark-pfp img:hover {
+    opacity: 1;
+}
+
+.connect-opt {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    margin-block: auto;
+}
+
+.pvideo,
+.pchat,
+.pblock {
+    background: rgba(83, 83, 83, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    margin-inline-end: 5px;
+    transition: all 200ms ease;
+    margin-block: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+}
+
+.pvideo img,
+.pchat img,
+.pblock img {
+    margin: auto;
+}
+
+.pvideo:hover,
+.pchat:hover,
+.pblock:hover {
+    background: rgba(83, 83, 83, 0.7);
+}

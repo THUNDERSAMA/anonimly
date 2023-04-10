@@ -245,7 +245,7 @@ $this->load->library('session');
   <nav>
     <div class="offcanvas" id="searchoff">
       <div class="offc1">
-        <input type="text" placeholder="Type here to search..." autofocus />
+        <input type="text" placeholder="Type here to search..." id="search-box" autofocus />
       </div>
       <div class="close-parent">
         <div class="close">
@@ -257,8 +257,8 @@ $this->load->library('session');
           </svg>
         </div>
       </div>
-      <div class="search-container">
-        <li class="suggest">
+      <div class="search-container" id="results">
+        <!-- <li class="suggest">
           <a href="">trending 1</a>
         </li>
         <li class="suggest">
@@ -266,8 +266,22 @@ $this->load->library('session');
         </li>
         <li class="suggest">
           <a href="">trending 3</a>
-        </li>
+        </li> -->
       </div>
+      <?php 
+                if($this->session->userdata('type')!=null)
+                {
+                 
+                  if($this->session->userdata('type')==2)
+                {
+                  $cm="'http://localhost/anonimly/index.php/Regcontroller/getbest'";
+                echo('<div class="best-search">
+                <button class="best-btn" onclick="location.href='.$cm.'">Find Your Ideal Mentor</button>
+              </div>');
+                }
+              }
+               ?>
+      
     </div>
   </nav>
 
@@ -452,10 +466,49 @@ $this->load->library('session');
           </div>
         </div>
 
+       
         <div class="profile-more">
-          <a href="<?php echo base_url("index.php/ProfileController/private_profile") ?>">See More</a>
-          <img src="<?php echo base_url("svg-sources/arrow_outward_white_24dp.svg")?>" alt="" />
-        </div>
+          <a href="<?php echo base_url("index.php/ProfileController/private_profile") ?>">See More
+            <img src="<?php echo base_url("svg-sources/arrow_outward_white_24dp.svg")?>" alt="" />
+          </a>
+          <?php 
+                if($this->session->userdata('type')!=null)
+                {
+                 
+        //           if($this->session->userdata('type')==2)
+        //         {
+        //           $cm="'http://localhost/anonimly/index.php/Regcontroller/getbest'";
+        //         echo('<div class="best-search">
+        //         <button class="best-btn" onclick="location.href='.$cm.'">Find Your Ideal Mentor</button>
+        //       </div>');
+        //         }
+        ?>
+         <a href="<?php echo base_url("index.php/ProfileController/cns") ?>">Connections
+            <img src="<?php echo base_url("svg-sources/people_white_24dp.svg")?>" alt="" />
+          </a>
+        <?php
+              }
+               ?>
+         
+          <a href="<?php echo base_url("index.php/Logincontroller/logout") ?>">Log Out
+            <img src="<?php echo base_url("svg-sources/logout_white_24dp.svg")?>" alt="" />
+          </a>
+          <?php 
+                if($this->session->userdata('type')!=null)
+                {
+                 
+                  if($this->session->userdata('type')==1)
+                {
+                 
+        ?>
+         <a href="<?php echo base_url("index.php/MainController/applicationload") ?>">Applications
+            <img src="<?php echo base_url("svg-sources/description_white_24dp.svg")?>" alt="" />
+          </a>
+        <?php
+              }
+            }
+               ?>
+        </div>
       </div>
     </div>
   </nav>
@@ -934,6 +987,41 @@ document.querySelector(".addlayout").style.display = "flex";
       }
     }
 });
+//search
+$('#search-box').on('input', function() {
+        var query = $(this).val();
+
+        $.ajax({
+            url: '<?php echo base_url("index.php/Maincontroller/searchu") ?>',
+            type: 'GET',
+            data: {q: query},
+            success: function(response) {
+                var html = '';
+
+                $.each(response, function(i, result) {
+                 
+                    html += ' <li class="suggest" data-id="' + result.CID + '">' + result.SIID + '</li>';
+                });
+
+                $('#results').html(html);
+            }
+        });
+    });
+
+    $('#results').on('click', '.suggest', function() {
+        var id = $(this).data('id');
+  location.href="http://localhost/anonimly/index.php/ProfileController/profile?id="+id;
+        // $.ajax({
+        //     url: '<?php echo base_url("index.php/Maincontroller/detailu") ?>',
+        //     type: 'GET',
+        //     data: {id: id},
+        //     success: function(response) {
+        //         console.log(response);
+        //         $('#imc').html('');
+        //        $('#imc').prepend('<div class="image-child" onclick="apload('+response[0].ID+')"> <img src="'+response[0].IMAGES+'" alt=""> <div class="image-text"><h2>'+response[0].NAME+'</h2>Experience:'+response[0].EXPRIENCE+' <br>Expertise: '+response[0].EXPERTISE+'')
+        //     }
+        // });
+    });
 //load post
 
 

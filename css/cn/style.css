@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    body {
+        background: linear-gradient(#8e2de2 0%, #4a00e0 100%) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        font-family: 'Poppins', sans-serif;
+        overflow-x: hidden !important;
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    .bg-glass {
+        background: linear-gradient(#391e728c, transparent 80%);
+        /* box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        /* border: 1px solid rgba(0, 0, 0, 0.18); */
+    }
+
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        /* padding: 2rem; */
+
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    @media only screen and (min-width: 700px) {
+        .card-body {
+            justify-content: start;
+
+        }
+    }
+    @media only screen and (max-width: 700px) {
+        .card-body {
+            justify-content: center;
+
+        }
+    }
+
+    .pro-img {
+        z-index: 11;
+        
+    }
+
+    .little-profile .pro-img img {
+        width: 128px;
+        height: 128px;
+        -webkit-box-shadow: 0 -10px 100px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 -10px 100px rgba(0, 0, 0, 0.5);
+        border-radius: 100%;
+        object-fit: cover;
+        border: 2px solid white;
+        margin: 2rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    h5,
+    h6,
+    p,
+    small {
+        color: #ffffff;
+    }
+
+    .pfp-name {
+        z-index: 12;
+        /* margin-inline: 40px; */
+        margin: 2rem;
+        /* position: absolute; */
+    
+    }
+
+    g {
+        fill: #e8e3f8;
+    }
+
+    .planet-cont {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .planet {
+      animation: spin 70s linear infinite;
+      height: 130%;
+      opacity: 70%;
+    }
+
+    .corner {
+      position: absolute;
+      top: -80%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .connect {
+        width: 100%;
+        margin-top: 30px;
+        border-bottom: 5px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .connect h1 {
+        font-family: inherit;
+        margin-inline: 20px;
+        margin-bottom: 20px;
+        font-style: oblique;
+        font-weight: 400;
+        display: flex;
+        justify-content: center;
+    }

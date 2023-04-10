@@ -14,6 +14,70 @@ class ProfileController extends CI_Controller
         $this->load->model('Mlogin');
         $this->load->model('Feedmain');
     }
+    public function cns()
+    {
+      $eid=$this->session->userdata('auth')['CID'];
+      if($this->session->userdata('type')!=null)
+      {
+       
+        if($this->session->userdata('type')==2)
+      {
+        $sql = "SELECT *
+        FROM maskers
+        INNER JOIN  applications ON applications.MMID = maskers.MASKING_ID
+        WHERE applications.EMID='$eid' AND applications.STATUS = '2'";
+         $query = $this->db->query($sql);
+        $datas = $query->result_array();
+          file_put_contents("testz.txt",json_encode($datas));
+        $this->load->view('connections', array('datas' => $datas));
+      }
+      else
+      {
+        $sql = "SELECT *
+        FROM maskers
+        INNER JOIN  applications ON applications.EMID = maskers.MASKING_ID
+        WHERE applications.MMID='$eid' AND applications.STATUS = '2'";
+         $query = $this->db->query($sql);
+        $datas = $query->result_array();
+          file_put_contents("testz.txt",json_encode($datas));
+        $this->load->view('connections', array('datas' => $datas));
+      }
+    }
+      //$this->load->view('connections');
+    }
+    public function ablock()
+    {
+      if($this->session->userdata('type')!=null)
+      {
+       
+        if($this->session->userdata('type')==2)
+      {
+ $cb=$this->input->post('pid');
+$this->db->set('STATUS', 1);
+$this->db->where('MMID', $cb);
+$this->db->where('EMID', $this->session->userdata('auth')['CID']);
+$this->db->update('applications');
+// log_message('debug', 'SQL query: ' . $this->db->last_query());
+// log_message('debug', 'Affected rows: ' . $this->db->affected_rows());
+if ($this->db->affected_rows() > 0) {
+  echo "ok";
+}
+}
+else
+{
+  $cb=$this->input->post('pid');
+  $this->db->set('STATUS', 1);
+  $this->db->where('EMID', $cb);
+  $this->db->where('MMID', $this->session->userdata('auth')['CID']);
+  $this->db->update('applications');
+
+  if ($this->db->affected_rows() > 0) {
+    echo "ok";
+  }
+
+    }
+  }
+}
     public function feedload()
     {
        
@@ -68,6 +132,7 @@ if ($this->db->affected_rows() > 0) {
   echo "ok";
 }
     }
+ 
 public function aacept()
 {
 $cb=$this->input->post('pid');
@@ -251,7 +316,19 @@ public function profile()
   $like_query = $this->db->get_where('maskers', array('MASKING_ID' => $id, 'DELETED' => "0"));
   $like_result = $like_query->result_array();
     //$results = $query->result_array();
-    file_put_contents("testz.txt",json_encode($like_result));
+   // file_put_contents("testz.txt",json_encode($like_result));
+   $r_query = $this->db->get_where('bio', array('MID' => $id ,'STATUS' => '0'));
+  $r_result = $r_query->result();
+  
+  if (count($r_result) > 0) {
+    $this->db->select('BIO'); 
+$this->db->from('bio');
+$this->db->where('MID', $id);
+$query = $this->db->get();
+$result = $query->row_array()['BIO'];
+$this->session->set_userdata('tempbio', $result);
+
+  }
   $this->load->view('p_profile', array('like_result' => $like_result));
 }
 public function private_profile()

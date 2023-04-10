@@ -66,6 +66,13 @@ class MainController extends CI_Controller
             echo json_encode($posts);
           
     }
+    public function prfollow()
+    {
+      $this->db->set('POPULARITY', 'POPULARITY+1', FALSE);
+  $this->db->where('MASKING_ID',$this->input->post('pid'));
+  $this->db->update('maskers');
+
+    }
     public function comtupl()
     {
        $data = array(
@@ -186,6 +193,13 @@ if (count($like_result) > 0) {
   $this->db->where('ID', $this->input->post('pid'));
   $this->db->update('posts');
 }
+    }
+    public function postdelete()
+    {
+      $this->db->set('STATUS', '1');
+  $this->db->where('ID',$this->input->post('pid'));
+  $this->db->update('posts');
+
     }
     //post dislike
     public function postdislike()
@@ -321,11 +335,23 @@ public function videocall()
 }
 public function search()
 {
-    $query = $this->input->get('q');
+    $querys = $this->input->get('q');
     $sql = "SELECT *
     FROM mentors
     INNER JOIN  maskers ON mentors.MID = maskers.MASKING_ID
-    WHERE LOWER(mentors.NAME) LIKE '%".strtolower($query)."%' AND mentors.STATUS = '0'";
+    WHERE LOWER(mentors.NAME) LIKE '%".strtolower($querys)."%' AND mentors.STATUS = '0'";
+     $query = $this->db->query($sql);
+    $results = $query->result_array();
+
+    header('Content-Type: application/json');
+    echo json_encode($results);
+}
+public function searchu()
+{
+    $querys = $this->input->get('q');
+    $sql = "SELECT *
+    FROM maskers
+    WHERE LOWER(SIID) LIKE '%".strtolower($querys)."%' AND DELETED = '0'";
      $query = $this->db->query($sql);
     $results = $query->result_array();
 

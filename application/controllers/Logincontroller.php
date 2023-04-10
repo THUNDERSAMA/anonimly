@@ -105,6 +105,8 @@ class Logincontroller extends CI_Controller {
           
          //}
         
+    
+        
            
             $Login = new MLogin();
            
@@ -122,6 +124,15 @@ class Logincontroller extends CI_Controller {
                file_put_contents("test.txt",$this->session->userdata('auth')['CID']);
 $cookie_value = $this->session->userdata('auth')['CID'];
 setcookie($cookie_name, $cookie_value, time() + (86400 * 365), "/");
+$r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID'],"STATUS" => '0'));
+$r_result = $r_query->result();
+
+if (count($r_result) > 0) {
+    foreach ($r_result as $row) {
+        $for_value1 = $row->TYPE; 
+        $this->session->set_userdata('type', $for_value1);
+    }
+}
                 echo 1;
             } else {
                 /*If Both Username &  Password that we recieved is invalid, go here, and return 5 as output*/
