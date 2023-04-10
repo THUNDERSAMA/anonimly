@@ -16,6 +16,26 @@ class Regcontroller extends CI_Controller
     }
     public function index()
 	{
+        $r_query = $this->db->get_where('registrations', array('MID' => $this->session->userdata('auth')['CID'],"STATUS" => '0'));
+        $r_result = $r_query->result();
+        
+        if (count($r_result) > 0) {
+            $row = $r_query->row();
+            //file_put_contents("testcmt.txt",$row->TYPE);
+           // echo $r_result->TYPE;
+            if($row->TYPE=="1")
+            {
+                redirect('Regcontroller/reg_mentor');
+            }
+            else
+            {
+                redirect('Regcontroller/reg_entreprenuer');
+            }
+        }
+        else
+        {
+            $this->load->view('registrations/choose');
+        }
 
     }
     public function reg_entreprenuer()
@@ -156,7 +176,7 @@ if (count($r_result) > 0) {
     $query = $this->db->query($sql);
     $datas = $query->result();
     // $datas['users'] = $result;
-    file_put_contents("testcmt.txt",$xc.json_encode($datas));
+   // file_put_contents("testcmt.txt",$xc.json_encode($datas));
     $this->load->view('search', array('datas' => $datas));
 }
 }

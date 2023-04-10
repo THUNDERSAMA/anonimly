@@ -363,7 +363,7 @@ $this->load->library('session');
         </div>
       </div>
       <div class="chat">
-        <div class="chat-container">
+        <div class="chat-container" id="chatb">
           <div class="chat-left">
             <div class="chat-pfp">
               <img
@@ -403,10 +403,11 @@ $this->load->library('session');
       </div>
       <div class="chat-input">
         <div>
-          <textarea autoresize placeholder="Send a chat..."></textarea>
+          <textarea autoresize placeholder="Send a chat..." id="masg"></textarea>
         </div>
 
-        <img src="<?php echo base_url("svg-sources/send_white_24dp.svg")?>" alt="Send" />
+       <button style="    background: none;
+    border: none;" id="button-addon2" onclick="msg_send()"> <img src="<?php echo base_url("svg-sources/send_white_24dp.svg")?>" alt="Send" /></button>
       </div>
     </div>
   </nav>
@@ -452,7 +453,7 @@ $this->load->library('session');
         </div>
 
         <div class="profile-more">
-          <button href="">See More</button>
+          <a href="<?php echo base_url("index.php/ProfileController/private_profile") ?>">See More</a>
           <img src="<?php echo base_url("svg-sources/arrow_outward_white_24dp.svg")?>" alt="" />
         </div>
       </div>
@@ -767,7 +768,44 @@ $this->load->library('session');
   <span class="loader"></span>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
- 
+ <script>
+  var conn = new WebSocket('ws://localhost:8080/chat_socket/bin/chat_server.php');
+conn.onopen = function(e) {
+    console.log("Connection established!");
+};conn.onmessage = function(e) {
+  var msgrec=jQuery.parseJSON(e.data);
+    console.log(msgrec.msg);
+    var h = (new Date()).getHours();
+     var min = (new Date()).getMinutes(); 
+     var msf=' <div class="chat-left"><div class="chat-pfp"><img src="'+msgrec.pic+'"alt="pfp" /></div><div class="chat-text">'+msgrec.msg+'</div><span class="msg_time">'+h+':'+min+', Today</span></div>' ;
+  //var msf='<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">'+msgrec.msg+'<span class="msg_time">'+h+':'+min+', Today</span></div></div>'
+  
+$("#chatb").append(msf);
+$("#chatb").scrollTop($("#chatb")[0].scrollHeight);
+};
+function msg_send()
+{
+  var msgz=$("#masg").val();
+   //console.log("ede");
+  if(msgz!='')
+  {
+var content={
+  msg:msgz,
+  pic:"<?php echo ($this->session->userdata('auth')['IMAGES']); ?>"
+};
+conn.send(JSON.stringify(content));
+msgz="    "+ msgz;
+
+    var h = (new Date()).getHours();
+     var min = (new Date()).getMinutes();  
+     var msf='<div class="chat-right"> <div class="chat-text">'+msgz+'</div><span class="msg_time_send">'+h+':'+min+', Today</span> <div class="chat-pfp"> <img src="<?php echo ($this->session->userdata('auth')['IMAGES']); ?>" alt="pfp"> </div> </div>';
+  //var msf=' <div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">'+msgz+'<span class="msg_time_send">'+h+':'+min+', Today</span></div><div class="img_cont_msg"><img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg"></div></div>'
+$("#chatb").append(msf);
+document.getElementById("masg").value="";
+$("#chatb").scrollTop($("#chatb")[0].scrollHeight);
+}
+}
+ </script>
   <script>
     var loaded_posts = [];
     const primg="<?php echo ($this->session->userdata('auth')['IMAGES']); ?>";
@@ -938,12 +976,12 @@ function load_more_posts(source) {
           // if(flag%2==0)
           // {//'<div class="post">' + posts[i].TITLE + '</div>'
             if (posts[i].IMAGE==null) {
-              $('#postslist').append('<article class="postcard dark blue"> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href=""> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="pl'+posts[i].ID+'"> <a href="javascript:plike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_up_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li> <li class="tag__item" id="pd'+posts[i].ID+'"> <a href="javascript:pdlike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_down_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-clock mr-2"></i>Downvote --> </li> <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
+              $('#postslist').append('<article class="postcard dark blue"> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href="http://localhost/anonimly/index.php/ProfileController/profile?id='+posts[i].MASKIND_ID+'"> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="pl'+posts[i].ID+'"> <a href="javascript:plike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_up_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li> <li class="tag__item" id="pd'+posts[i].ID+'"> <a href="javascript:pdlike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_down_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-clock mr-2"></i>Downvote --> </li> <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
 
             }
             else{
             var imx="http://localhost/anonimly/uploads/";
-          $('#postslist').append('<article class="postcard dark blue"> <a class="postcard__img_link" href="#"> <img class="postcard__img" src="'+imx+posts[i].IMAGE+'" alt="Image Title" /> </a> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href=""> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="pl'+posts[i].ID+'"> <a href="javascript:plike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_up_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li> <li class="tag__item" id="pd'+posts[i].ID+'"> <a href="javascript:pdlike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_down_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-clock mr-2"></i>Downvote --> </li> <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
+          $('#postslist').append('<article class="postcard dark blue"> <a class="postcard__img_link" href="#"> <img class="postcard__img" src="'+imx+posts[i].IMAGE+'" alt="Image Title" /> </a> <div class="postcard__text"> <h1 class="postcard__title blue"><a href="#">'+posts[i].TITLE+'</a></h1> <div class="postcard__subtitle small"> <time datetime="2020-05-25 12:00:00"> <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020 </time> </div> <div class="postcard__bar"></div> <div class="postcard__preview-txt">'+atob(posts[i].POST)+' </div> <div class="postcard-profile"> <a href="http://localhost/anonimly/index.php/ProfileController/profile?id='+posts[i].MASKIND_ID+'"> <img src="'+posts[i].IMAGES+'" alt="pfp" /> <div>'+posts[i].SIID+'</div> </a> </div> <ul class="postcard__tagbox"> <li class="tag__item" id="pl'+posts[i].ID+'"> <a href="javascript:plike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_up_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-tag mr-2"></i>Upvote --> </li> <li class="tag__item" id="pd'+posts[i].ID+'"> <a href="javascript:pdlike('+posts[i].ID+');" ><img src="<?php echo base_url("svg-sources/thumb_down_white_24dp.svg")?>" alt="ico" /></a> <!-- <i class="fas fa-clock mr-2"></i>Downvote --> </li> <li class="tag__item comment-button play blue"> <a href="javascript:cmtload('+posts[i].ID+');" id="cmtt"> <img src="<?php echo base_url("svg-sources/forum_white_24dp.svg")?>" alt="ico" /> <!-- <i class="fas fa-play mr-2"></i>Comment --> </a> </li> </ul> </div> </article>');
          // }
         }
          // flag++;

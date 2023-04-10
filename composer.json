@@ -12,7 +12,8 @@
 	},
 	"require": {
 		"php": ">=5.3.7",
-		"codeigniter4/framework": "^4.1"
+		"codeigniter4/framework": "^4.1",
+		"cboden/ratchet": "^0.4.4"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
